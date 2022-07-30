@@ -1,11 +1,6 @@
 exports.getAllUsers = (req, res) => {
   res.status(200).json({
-    status: "success",
-    results: Users.length,
-    data: {
-      Users,
-    },
-  });
+
 };
 
 exports.getUser = (req, res) => {
