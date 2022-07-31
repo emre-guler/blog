@@ -1,48 +1,40 @@
-import { toUSVString } from "util";
+import { Response, Request } from "express";
+const User = require("./../models/userModel");
 
-const User=require("./../models/userModel");
-
-exports.getAllUsers = async (req, res) => {
-  try{
-    const users=await User.find();
+exports.getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find();
     res.status(200).json({
-  status:"success",
-  result:users.length,
-  data:{
-    users
-  }
-  });
-  }
-  catch(err){
+      status: "success",
+      result: users.length,
+      data: {
+        users,
+      },
+    });
+  } catch (err) {
     res.status(404).json({
-      status:"fail",
-      message:err
-    })
+      status: "fail",
+      message: err,
+    });
   }
-  };
+};
 
-// exports.getUser = (req, res) => {
-//   console.log(req.params);
-
-//   const id = req.params.id * 1;
-//   const User = Users.find((el) => el.id === id);
-
-//   //  if (id > Users.length) {
-
-//   if (!User) {
-//     return res.status(404).json({
-//       status: "fail",
-//       message: "Invalid ID",
-//     });
-//   }
-
-//   res.status(200).json({
-//     status: "success",
-//     data: {
-//       User,
-//     },
-//   });
-// };
+exports.getUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json({
+      status: "success",
+      data: {
+        user,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
 
 // exports.create = (req, res) => {
 //   let salt = crypto.randomBytes(16).toString("base64");
