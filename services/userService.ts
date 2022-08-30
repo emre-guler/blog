@@ -1,7 +1,12 @@
+const User = require("./../models/userModel");
+import { Request } from "express";
 class UserService {
-  async getUsers() {
+  async getUsers(query: Request["body"]) {
     try {
-      const Users = await User.find();
+      const queryObj = { ...query };
+      const excludedFields = ["page", "sort", "limit", "fields"];
+      excludedFields.forEach((x) => delete queryObj[x]);
+      const Users = await User.find(queryObj);
       return {
         success: true,
         Users,
@@ -27,8 +32,8 @@ class UserService {
       };
     }
   }
-  async createUser(postToCreate: Request["body"]) {
-    const newUser = new User(postToCreate);
+  async createUser(user: Request["body"]) {
+    const newUser = new User(user);
     try {
       const result = await this.save(newUser);
       return {

@@ -1,6 +1,6 @@
-const User = require("./../models/userModel");
-
-const blogSchema = new mongoose.Schema(
+import { Schema } from "mongoose";
+const mongoose = require("mongoose");
+const blogSchema = new Schema(
   {
     title: {
       type: String,
@@ -15,8 +15,8 @@ const blogSchema = new mongoose.Schema(
       default: Date.now(),
     },
     user_id: {
-      type: User.id,
-      required: [true, "Must have a user id"],
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   {

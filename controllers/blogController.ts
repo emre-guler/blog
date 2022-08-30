@@ -3,7 +3,7 @@ const BlogService = require("./../services/blogService");
 
 exports.getAllBlogs = async (req: Request, res: Response) => {
   try {
-    const blogs = await BlogService.getAllBlogs();
+    const blogs = await BlogService.getAllBlogs(req.body);
     res.status(200).json({
       status: "success",
       result: blogs.length,

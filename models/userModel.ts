@@ -1,5 +1,4 @@
-import { url } from "inspector";
-
+import { Schema } from "mongoose";
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
@@ -40,6 +39,12 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
+    blogs: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Blog",
+      },
+    ],
   },
   {
     autoCreate: true, // auto create collection

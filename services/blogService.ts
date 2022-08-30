@@ -1,8 +1,12 @@
 const Blog = require("./../models/blogModel");
+import { Request } from "express";
 class BlogService {
-  async getBlogs() {
+  async getBlogs(query: Request["body"]) {
     try {
-      const blogs = await Blog.find();
+      const queryObj = { ...query };
+      const excludedFields = ["page", "sort", "limit", "fields"];
+      excludedFields.forEach((x) => delete queryObj[x]);
+      const blogs = await Blog.find(queryObj);
       return {
         success: true,
         blogs,
