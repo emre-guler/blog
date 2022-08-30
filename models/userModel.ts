@@ -2,22 +2,49 @@ import { url } from "inspector";
 
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-  age: String,
-  bio: String,
-  created_ad: Date,
-  email_address: String,
-  fullname: String,
-  is_active: Boolean,
-  last_login_date: Date,
-  mobile_phone_number: String,
-  password: String,
-  photo_url: String,
-  username: String,
-  work_titles: Array,
-  social_media_urls: String,
-});
-
-const User = mongoose.model("User", userSchema, "user");
-
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: [true, "Must have a username"],
+      unique: true,
+    },
+    firstName: {
+      type: String,
+      required: [true, "Must have a first name"],
+    },
+    lastName: {
+      type: String,
+      required: [true, "Must have a last name"],
+    },
+    age: {
+      type: String,
+    },
+    email_address: {
+      type: String,
+      required: [true, "Must have a email address"],
+      unique: true,
+    },
+    phone_number: Number,
+    password: String,
+    photo_url: String,
+    is_active: {
+      type: Boolean,
+      default: true,
+    },
+    created_ad: {
+      type: Date,
+      default: Date.now(),
+    },
+    last_login_date: {
+      type: Date,
+      default: Date.now(),
+    },
+  },
+  {
+    autoCreate: true, // auto create collection
+    autoIndex: true, // auto create indexes
+  }
+);
+const User = mongoose.model("Users", userSchema);
 module.exports = User;
