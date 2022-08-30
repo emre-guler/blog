@@ -1,9 +1,9 @@
 import { Response, Request } from "express";
-const Blog = require("./../models/blogModel");
+const BlogService = require("./../services/blogService");
 
 exports.getAllBlogs = async (req: Request, res: Response) => {
   try {
-    const blogs = await Blog.find();
+    const blogs = await BlogService.getAllBlogs();
     res.status(200).json({
       status: "success",
       result: blogs.length,
@@ -20,7 +20,7 @@ exports.getAllBlogs = async (req: Request, res: Response) => {
 };
 exports.getBlog = async (req: Request, res: Response) => {
   try {
-    const blog = await Blog.findById(req.params.id);
+    const blog = await BlogService.getBlogById(req.params.id);
     res.status(200).json({
       status: "success",
       data: {
@@ -36,9 +36,8 @@ exports.getBlog = async (req: Request, res: Response) => {
 };
 
 exports.createBlog = async (req: Request, res: Response) => {
-  const newBlog = new Blog(req.body);
   try {
-    await newBlog.save();
+    const newBlog = await BlogService.createBlog(req.body);
     res.status(200).json(newBlog);
   } catch (err) {
     res.status(400).json({
@@ -49,10 +48,7 @@ exports.createBlog = async (req: Request, res: Response) => {
 };
 exports.updateBlog = async (req: Request, res: Response) => {
   try {
-    const blog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const blog = await BlogService.updateBlog(req.params.id, req.body);
 
     res.status(200).json({
       status: "success",
@@ -69,7 +65,7 @@ exports.updateBlog = async (req: Request, res: Response) => {
 };
 exports.deleteBlog = async (req: Request, res: Response) => {
   try {
-    await Blog.findByIdAndDelete(req.params.id);
+    await BlogService.deleteBlog(req.params.id);
 
     res.status(204).json({
       status: "success",
