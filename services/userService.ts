@@ -3,13 +3,13 @@ import { Request } from "express";
 class UserService {
   async getUsers(query: Request["body"]) {
     try {
-      const queryObj = { ...query };
-      const excludedFields = ["page", "sort", "limit", "fields"];
-      excludedFields.forEach((x) => delete queryObj[x]);
-      const Users = await User.find(queryObj);
+      //const queryObj = { ...query };
+      // excludedFields = ["page", "sort", "limit", "fields"];
+      //excludedFields.forEach((x) => delete queryObj[x]);
+      const Users = await User.find(query);
       return {
         success: true,
-        Users,
+        data: Users,
       };
     } catch (err) {
       return {
@@ -23,7 +23,7 @@ class UserService {
       const user = await User.findById(id);
       return {
         success: true,
-        User,
+        user,
       };
     } catch (err) {
       return {
@@ -55,7 +55,7 @@ class UserService {
       });
       return {
         success: true,
-        User,
+        user,
       };
     } catch (err) {
       return {

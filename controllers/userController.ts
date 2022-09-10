@@ -1,15 +1,13 @@
 import { Response, Request } from "express";
 const UserService = require("./../services/userService");
+const UserServiceInstance = new UserService();
 
 exports.getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = await UserService.getAllUsers(req.body);
+    const users = await UserServiceInstance.getUsers(req.body);
+    res.set("Content-Type", "application/json");
     res.status(200).json({
-      status: "success",
-      result: users.length,
-      data: {
-        users,
-      },
+      users,
     });
   } catch (err) {
     res.status(404).json({
@@ -21,12 +19,9 @@ exports.getAllUsers = async (req: Request, res: Response) => {
 
 exports.getUser = async (req: Request, res: Response) => {
   try {
-    const user = await UserService.getUserById(req.params.id);
+    const user = await UserServiceInstance.getUserById(req.params.id);
     res.status(200).json({
-      status: "success",
-      data: {
-        user,
-      },
+      user,
     });
   } catch (err) {
     res.status(404).json({
@@ -38,7 +33,7 @@ exports.getUser = async (req: Request, res: Response) => {
 
 exports.createUser = async (req: Request, res: Response) => {
   try {
-    const newUser = await UserService.createUser(req.body);
+    const newUser = await UserServiceInstance.createUser(req.body);
     res.status(200).json(newUser);
   } catch (err) {
     res.status(400).json({
@@ -50,13 +45,10 @@ exports.createUser = async (req: Request, res: Response) => {
 
 exports.updateUser = async (req: Request, res: Response) => {
   try {
-    const user = await UserService.updateUser(req.params.id, req.body);
+    const user = await UserServiceInstance.updateUser(req.params.id, req.body);
 
     res.status(200).json({
-      status: "success",
-      data: {
-        user,
-      },
+      user,
     });
   } catch (err) {
     res.status(404).json({
@@ -68,8 +60,7 @@ exports.updateUser = async (req: Request, res: Response) => {
 
 exports.deleteUser = async (req: Request, res: Response) => {
   try {
-    await UserService.deleteUser(req.params.id);
-
+    await UserServiceInstance.deleteUser(req.params.id);
     res.status(204).json({
       status: "success",
       data: null,

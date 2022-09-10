@@ -6,10 +6,9 @@
   "scripts": {
     "typ-dev": "nodemon --exec ts-node server.ts",
     "dev": "nodemon server.js",
-    "test": "jest --coverage",
-    "test:watch": "ts-jest --watch"
+    "test": "jest --coverage --detectOpenHandles",
+    "test:watch": "jest --watch --detectOpenHandles"
   },
-  "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -17,7 +16,8 @@
     "express": "^4.18.1",
     "mongoose": "^6.5.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "request-promise": "^4.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
