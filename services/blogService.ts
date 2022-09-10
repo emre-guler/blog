@@ -3,10 +3,10 @@ import { Request } from "express";
 class BlogService {
   async getBlogs(query: Request["body"]) {
     try {
-      const queryObj = { ...query };
-      const excludedFields = ["page", "sort", "limit", "fields"];
-      excludedFields.forEach((x) => delete queryObj[x]);
-      const blogs = await Blog.find(queryObj);
+      // const queryObj = { ...query };
+      // const excludedFields = ["page", "sort", "limit", "fields"];
+      // excludedFields.forEach((x) => delete queryObj[x]);
+      const blogs = await Blog.find();
       return {
         success: true,
         blogs,
